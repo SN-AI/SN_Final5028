@@ -29,5 +29,19 @@
       {
         "url": "heroku/python"
       }
-    ]
+    ],
+    "environments": {
+        "test": {
+        "scripts": {
+            "test-setup": "pip install -r requirements.txt",
+            "test": "pytest"
+        },
+        "env": {
+            "FLASK_ENV": "test",
+            "DATABASE_URL": "postgres://u91adldcea3ubr:pdeaabe239aa5732da0530bc0bf6c9f0164447f140b15f5cb52e1c51a1f0ef984@c5flugvup2318r.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/ddaik1il3ktb72",
+            "DEBUG": "False",
+            "TESTING": "True"
+            }
+        }
+        }
   }
