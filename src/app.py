@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 
+
 from flask import Flask, request, jsonify
 from routes import home, get_articles, get_sentiment
-from userdata import add_company, get_companies, add_user, get_users, get_user
+from userdata.users import add_company, get_companies, add_user, get_users, get_user
 from config import Config
+from flask_sqlalchemy import SQLAlchemy
 
 # Create Flask app instance
 app = Flask(__name__)
 app.config.from_object(Config)
+
+# initialize db
+db = SQLAlchemy(app)
 
 # Register routes
     

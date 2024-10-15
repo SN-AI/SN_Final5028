@@ -2,8 +2,9 @@ import aiohttp
 import json
 import asyncio
 from flask import Flask, request, jsonify
-from collection.newsAPIcollector import NewsAPIClient
 from analysis.sentimentAnalysis import sentiment_analysis
+from collection.newsAPIcollector import NewsAPIClient
+
 
 app = Flask(__name__)
 

@@ -1,7 +1,9 @@
+# src/userdata/users.py
+
 import os
 from flask import Flask, request, jsonify
 import sqlite3
-from config import Config
+from ..config import Config
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
