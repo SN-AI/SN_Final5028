@@ -1,0 +1,33 @@
+{
+    "name": "Flask Final - SN",
+    "description": "A simple app for reading NewsAPI news for a given company and storing in a database",
+    "repository": "https://github.com/SN-AI/SN_Final5028.git",
+    "keywords": ["python", "flask"],
+    "env": {
+      "FLASK_ENV": {
+        "description": "The environment in which the app is running",
+        "value": "production"
+      },
+      "DATABASE_URL": {
+        "description": "The URL of the database",
+        "required": true
+      }
+    },
+    "addons": [
+      "heroku-postgresql"
+    ],
+    "scripts": {
+      "postdeploy": "python manage.py db upgrade"
+    },
+    "formation": {
+      "web": {
+        "quantity": 1,
+        "size": "free"
+      }
+    },
+    "buildpacks": [
+      {
+        "url": "heroku/python"
+      }
+    ]
+  }

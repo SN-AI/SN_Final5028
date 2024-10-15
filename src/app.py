@@ -3,10 +3,11 @@
 from flask import Flask, request, jsonify
 from routes import home, get_articles, get_sentiment
 from userdata import add_company, get_companies, add_user, get_users, get_user
+from config import Config
 
 # Create Flask app instance
 app = Flask(__name__)
-
+app.config.from_object(Config)
 
 # Register routes
     
