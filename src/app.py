@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 
-from flask import Flask, request
-from collection.newsAPIcollector import NewsAPIClient
-from analysis.sentimentAnalysis import sentiment_analysis
+from flask import Flask, request, jsonify
+from routes import home, get_articles, get_sentiment
+from userdata import add_company, get_companies, add_user, get_users, get_user
 
+# Create Flask app instance
 app = Flask(__name__)
 
-@app.route("/")
-def main():
-    return '''
-     <form action="/echo_user_input" method="POST">
-         <input name="user_input">
-         <input type="submit" value="Submit!">
-     </form>
-     '''
 
-@app.route("/echo_user_input", methods=["POST"])
-def echo_input():
-    input_text = request.form.get("user_input", "")
-    return "You entered: " + input_text
+# Register routes
+    
+app.add_url_rule('/', 'home', home)
+app.add_url_rule('/articles', 'get_articles', get_articles, methods=['POST'])
+app.add_url_rule('/articles/sentiment', 'get_sentiment', get_sentiment, methods=['POST'])
+app.add_url_rule('/add_company', 'add_company', add_company, methods=['POST'])
+app.add_url_rule('/get_companies', 'get_companies', get_companies, methods=['GET'])
+app.add_url_rule('/add_user', 'add_user', add_user, methods=['POST'])
+app.add_url_rule('/get_users', 'get_users', get_users, methods=['GET'])
+app.add_url_rule('/get_user', 'get_user', get_user, methods=['GET'])
+
+
+# Run the app
+if __name__ == "__main__":
+    app.run()

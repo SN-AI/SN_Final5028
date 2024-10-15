@@ -13,7 +13,12 @@ class NewsAPIArticle:
 class NewsAPIClient:
     def __init__(self, api_key):
         self.api_key = api_key
+        
+    async def init_session(self):
         self.session = aiohttp.ClientSession()
+    
+    async def close_session(self):
+        await self.session.close()
 
     async def get_articles_json(self, company):
         url = "https://newsapi.org/v2/everything"
@@ -36,23 +41,9 @@ class NewsAPIClient:
             return None
 
     async def parse_articles_json(self, json_str):
-        articles_list = []
-
-        try:
-            json_data = json.loads(json_str)
-            for article in json_data.get("articles", []):
-                news_article = NewsAPIArticle(
-                    publisher=article.get("source", {}).get("name"),
-                    title=article.get("title"),
-                    description=article.get("description"),
-                    url=article.get("url"),
-                    publishedAt=article.get("publishedAt")
-                )
-                articles_list.append(news_article)
-        except json.JSONDecodeError as e:
-            print(f"JSON decoding failed: {e}")
-
-        return articles_list
+        if isinstance(json_str, dict):
+            return json_str
+        return json.loads(json_str)
 
     async def close(self):
         await self.session.close()
@@ -60,13 +51,15 @@ class NewsAPIClient:
 # Example usage
 async def main():
     api_key = "1993f371257c43b6981695d55e11a47b"
-    client = NewsAPIClient(api_key)
-    articles_json = await client.get_articles_json("Microsoft")
+    news_client = NewsAPIClient(api_key)
+    await news_client.init_session()
+    articles_json = await news_client.get_articles_json("Microsoft")
     if articles_json:
-        articles = await client.parse_articles_json(articles_json)
+        articles = await news_client.parse_articles_json(articles_json)
         for article in articles:
             print(article.title)
-    await client.close()
+    await news_client.close()
 
 # Run the example
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
