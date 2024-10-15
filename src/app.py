@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 from flask import Flask, request
+from collection.newsAPIcollector import NewsAPIClient
+from analysis.sentimentAnalysis import sentiment_analysis
 
 app = Flask(__name__)
 
